@@ -1,12 +1,12 @@
 import setuptools
-from v2sub import VERSION
+from v2sub import __version__
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="v2sub",
-    version=VERSION,
+    version=__version__,
     author="airborne007",
     author_email="huangtao0202@gmail.com",
     description="A v2ray subscriber written by python3",

@@ -110,7 +110,7 @@ If you only have one subscribe, just do as following steps (root or sudo is need
     # v2sub remove --help
     Usage: v2sub remove [OPTIONS]
     
-      remove subscribe and it's nodes.
+      remove subscribe and it\'s nodes.
     
     Options:
       --name TEXT        name of subscribe will be removed, if not provided,
@@ -135,13 +135,24 @@ If you only have one subscribe, just do as following steps (root or sudo is need
       --port INTEGER  the local port v2ray client listen on, default is 1080
       --help          Show this message and exit.
     ```
+7. test node delay time
+
+    ```bash
+    Usage: v2sub ping [OPTIONS]
+    
+    Options:
+      --name TEXT      the name of the subscribe you want ping with. if
+                       notprovided, default subscribe will be pinged.
+      --index INTEGER  the index of subscribe you want to ping with.
+      --help           Show this message and exit.
+    ```
    
 ## TODO
 
-support node speed test by `ping` or `tcpping`.
+support more features.
 
 ## More
 
 This program can run on all Linux platforms in theory, but I only tested it on
-Archlinux. If you have any problems with other distributions, issue or pull
+Arch Linux. If you have any problems with other distributions, issue or pull
 request is welcome.

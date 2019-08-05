@@ -4,12 +4,10 @@ import sys
 
 import click
 
+from v2sub import __version__
 from v2sub import config
-from v2sub import server
 from v2sub import subscribe
 from v2sub import utils
-from v2sub import VERSION
-
 
 
 @click.group()
@@ -24,7 +22,7 @@ def cli():
 @cli.command()
 def version():
     """show version"""
-    click.echo(VERSION)
+    click.echo(__version__)
 
 
 @cli.command()
@@ -75,6 +73,16 @@ def list_servers(name, all_subs):
 
 
 @cli.command()
+@click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
+              help="the name of the subscribe you want ping with. if not"
+                   "provided, default subscribe will be pinged.")
+@click.option("--index", type=click.INT,
+              help="the index of subscribe you want to ping with.")
+def ping(name, index):
+    utils.ping(name=name, index=index)
+
+
+@cli.command()
 @click.argument("index", type=click.INT)
 @click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
               help="the name of the subscribe you want run with. if not "
@@ -86,7 +94,7 @@ def run(index, name, port):
 
     INDEX: the index node id list before.
     """
-    node = subscribe.get_node(index - 1, name)
+    node = subscribe.get_node(index, name)
     config.update_config(node, port)
     utils.restart_server()
 

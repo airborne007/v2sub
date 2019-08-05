@@ -91,7 +91,7 @@ def _list_server(name, nodes):
     click.echo("SUBSCRIBE: %s" % name)
     click.echo('=' * 50)
     for index, node in enumerate(nodes, start=1):
-        click.echo('[' + str(index) + ']' + node['ps'] + '--' + node['add'])
+        utils.echo_node(index, node)
 
 
 def list_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
@@ -118,13 +118,17 @@ def _remove_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
 def get_node(index, name=DEFAULT_SUBSCRIBE):
     all_servers = utils.read_as_json(SERVER_CONFIG)
     try:
-        run_server = all_servers[name]
+        servers = all_servers[name]
     except KeyError:
         click.echo("No subscribe named %s found!" % name)
         sys.exit(1)
     try:
-        node = run_server[index]
-    except TypeError:
-        click.echo("Error index of subscribe %s!" % name)
+        if index - 1 < 0:
+            raise IndexError()
+        node = servers[index - 1]
+        click.echo("switch to node:")
+        utils.ping(name=name, index=index)
+    except IndexError:
+        click.echo("Invalid index: %s, please check it." % index)
         sys.exit(1)
     return node
