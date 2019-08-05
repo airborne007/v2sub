@@ -1,4 +1,5 @@
 # v2sub
+
 A v2ray subscriber written by python3
 
 ## Simple Usage
@@ -19,7 +20,7 @@ If you only have one subscribe, just do as following steps (root or sudo is need
     v2sub add [url]
     ```
 
-4. update subscribe if needed
+4. update subscribe
     
     ```bash
     v2sub update
@@ -33,9 +34,11 @@ If you only have one subscribe, just do as following steps (root or sudo is need
 
 ## Features
 
-1. multiple subscribes support
+- multiple subscribes support
 
-2. run system `v2ray` which you can be controlled by `systemctl` command
+- run system `v2ray` which you can be controlled by `systemctl` command
+
+- node delay test is support by `ping`
 
 ## More details
 
@@ -53,6 +56,7 @@ If you only have one subscribe, just do as following steps (root or sudo is need
     Commands:
       add      add a subscribe.
       list     list subscribe nodes.
+      ping     test node delay by ping.
       remove   remove subscribe.
       run      start v2ray with an specify node.
       update   update subscribe nodes.
@@ -135,15 +139,16 @@ If you only have one subscribe, just do as following steps (root or sudo is need
       --port INTEGER  the local port v2ray client listen on, default is 1080
       --help          Show this message and exit.
     ```
-7. test node delay time
+7. test node delay
 
     ```bash
     Usage: v2sub ping [OPTIONS]
     
     Options:
-      --name TEXT      the name of the subscribe you want ping with. if
-                       notprovided, default subscribe will be pinged.
-      --index INTEGER  the index of subscribe you want to ping with.
+      --name TEXT      the name of the subscribe you want ping with. if not
+                       provided, default subscribe will be pinged.
+      --index INTEGER  the node of subscribe you want to ping with. if not
+                       provided, will test all node delay.
       --help           Show this message and exit.
     ```
    
@@ -154,5 +159,5 @@ support more features.
 ## More
 
 This program can run on all Linux platforms in theory, but I only tested it on
-Arch Linux. If you have any problems with other distributions, issue or pull
-request is welcome.
+`Arch Linux`. If you have any problems with other linux distributions, issue or
+pull request is welcome.

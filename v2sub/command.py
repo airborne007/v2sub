@@ -74,11 +74,13 @@ def list_servers(name, all_subs):
 
 @cli.command()
 @click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
-              help="the name of the subscribe you want ping with. if not"
+              help="the name of the subscribe you want ping with. if not "
                    "provided, default subscribe will be pinged.")
 @click.option("--index", type=click.INT,
-              help="the index of subscribe you want to ping with.")
+              help="the node of subscribe you want to ping with. if not "
+                   "provided, will test all node delay.")
 def ping(name, index):
+    """test node delay by ping."""
     utils.ping(name=name, index=index)
 
 
