@@ -23,34 +23,18 @@ def init():
         os.mknod(SERVER_CONFIG)
 
 
-def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
-    try:
-        resp = requests.get(url)
-    except requests.exceptions.ConnectionError as err:
-        click.echo("Can't parse the url, please check your network or make"
-                   " sure you entered the correct URL!")
-        raise err
-    server_links = base64.b64decode(resp.content).splitlines()
-    servers = []
-    for index, server_link in enumerate(server_links):
-        server_link = utils.byte2str(server_link).replace("vmess://", "")
-        server_node = json.loads(base64.b64decode(server_link))
-        servers.append(server_node)
-    name_servers = utils.read_as_json(SERVER_CONFIG)
-    name_servers.update({name: servers})
-    utils.write_to_json(name_servers, SERVER_CONFIG)
-
-
 def add_subscribe(url, name=DEFAULT_SUBSCRIBE):
     subscribe = utils.read_as_json(SUBSCRIBE_CONFIG)
     subscribe.update({name: url})
     utils.write_to_json(subscribe, SUBSCRIBE_CONFIG)
+    click.echo("Added subscribe: %s" % url)
 
 
 def list_subscribe():
     subscribe = utils.read_as_json(SUBSCRIBE_CONFIG)
+    click.echo("Subscribes:")
     for name, url in subscribe.items():
-        click.echo("\n%s: %s" % (name, url))
+        click.echo("%s: %s" % (name, url))
 
 
 def _remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
@@ -62,9 +46,40 @@ def _remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
     utils.write_to_json(all_subscribes, SUBSCRIBE_CONFIG)
 
 
+def _remove_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
+    all_servers = utils.read_as_json(SERVER_CONFIG)
+    if all_subs:
+        all_servers = dict()
+    else:
+        all_servers.pop(name, None)
+    utils.write_to_json(all_servers, SERVER_CONFIG)
+
+
 def remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
     _remove_subscribe(name=name, all_subs=all_subs)
     _remove_servers(name=name, all_subs=all_subs)
+    if all_subs:
+        click.echo("Removed all subscribes.")
+    else:
+        click.echo("Removed subscribe: %s" % name)
+
+
+def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
+    try:
+        resp = requests.get(url)
+    except requests.exceptions.ConnectionError as err:
+        click.echo("Can't parse the url, please check your network or make"
+                   " sure you entered the correct URL!")
+        sys.exit(1)
+    server_links = base64.b64decode(resp.content).splitlines()
+    servers = []
+    for index, server_link in enumerate(server_links):
+        server_link = utils.byte2str(server_link).replace("vmess://", "")
+        server_node = json.loads(base64.b64decode(server_link))
+        servers.append(server_node)
+    all_servers = utils.read_as_json(SERVER_CONFIG)
+    all_servers.update({name: servers})
+    utils.write_to_json(all_servers, SERVER_CONFIG)
 
 
 def _update_all_subscribe(subscribes: dict):
@@ -98,21 +113,12 @@ def list_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
     all_servers = utils.read_as_json(SERVER_CONFIG)
     if not all_servers:
         click.echo("No servers found, please add and update subscribe first!")
-        sys.exit()
+        sys.exit(1)
     if all_subs:
         for name, nodes in all_servers.items():
             _list_server(name, nodes)
     else:
         _list_server(name, all_servers[name])
-
-
-def _remove_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
-    all_servers = utils.read_as_json(SERVER_CONFIG)
-    if all_subs:
-        all_servers = dict()
-    else:
-        all_servers.pop(name, None)
-    utils.write_to_json(all_servers, SERVER_CONFIG)
 
 
 def get_node(index, name=DEFAULT_SUBSCRIBE):
@@ -123,11 +129,10 @@ def get_node(index, name=DEFAULT_SUBSCRIBE):
         click.echo("No subscribe named %s found!" % name)
         sys.exit(1)
     try:
-        if index - 1 < 0:
-            raise IndexError()
+        utils.check_index(index)
         node = servers[index - 1]
         click.echo("switch to node:")
-        utils.ping(name=name, index=index)
+        utils.ping(name=name, index=index, all_servers=all_servers)
     except IndexError:
         click.echo("Invalid index: %s, please check it." % index)
         sys.exit(1)

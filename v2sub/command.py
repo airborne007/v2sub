@@ -14,8 +14,8 @@ from v2sub import utils
 def cli():
     """A v2ray subscriber written by python3"""
     if os.getuid() != 0:
-        print("Please run this command as root or add sudo before command.")
-        sys.exit()
+        click.echo("Please run as root.")
+        sys.exit(1)
     subscribe.init()
 
 
