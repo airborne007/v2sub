@@ -1,59 +1,58 @@
 # v2sub
 
-A v2ray subscriber written by python3
+一个用`python3`写的`v2ray`订阅器
 
-* [中文版本](./README_CN.md)
+* [English version](./README.md)
 
-Features:
+功能:
 
-- multiple subscribes support
+- 支持多个订阅
 
-- run system `v2ray` which can be controlled by `systemctl` command
+- 直接运行系统`v2ray`命令，好处是可以通过`systemctl`控制
 
-- node delay test is support
+- 支持节点延迟测试
 
-## Installation
+## 安装
 
 ```bash
 pip install v2sub
 ```
 
-or
+或者
 
 ```bash
 pip install git+https://github.com/airborne007/v2sub.git@master
 ```
 
-## Usage
+## 使用
 
-**NOTE:** Before using, I will assume that you have installed v2ray and v2sub
+**注意：** 使用之前，我假定你系统上已经安装好了`v2ray`和`v2sub`
 
-If you have only one subscribe source, usage is really simple. Just do as
-following steps(root or sudo is needed):
+如果你只有一个订阅源，那么使用就非常简单了。按照以下步骤操作（需要root或者sudo）：
 
-1. add a subscribe source
+1. 添加一个订阅源
 
     ```bash
     v2sub add [url]
    ```
 
-2. update subscribe
+2. 更新订阅
 
     ```bash
     v2sub update
    ```
 
-3. run and enjoin it
+3. 运行
 
     ```bash
     v2sub run [index]
    ```
    
-   *All nodes will be list after update, the `index` is the order of node.*
+   *更新订阅后会列出所有节点，`index`就是节点序号*
 
-## More Details
+## 更详细说明
 
-1. help message
+1. 帮助信息
 
     ```bash
     # v2sub --help
@@ -74,7 +73,7 @@ following steps(root or sudo is needed):
       version  show version
     ```
 
-2. add or update subscribe
+2. 添加或更新订阅
 
     ```bash
     # v2sub add --help
@@ -90,7 +89,7 @@ following steps(root or sudo is needed):
       --help       Show this message and exit.
    ```
 
-3. update subscribe nodes
+3. 更新订阅
 
     ```bash
     # v2sub update --help
@@ -105,7 +104,7 @@ following steps(root or sudo is needed):
       --help             Show this message and exit.
    ```
 
-4. list subscribe nodes
+4. 列出订阅下的节点
 
     ```bash
     # v2sub list --help
@@ -120,7 +119,7 @@ following steps(root or sudo is needed):
       --help             Show this message and exit.
     ```
 
-5. remove subscribe and it's nodes
+5. 移除订阅及其节点
 
     ```bash
     # v2sub remove --help
@@ -135,7 +134,7 @@ following steps(root or sudo is needed):
       --help             Show this message and exit.
       ```
 
-6. run or switch node
+6. 运行或切换节点运行
 
     ```bash
     # v2sub run --help
@@ -152,7 +151,7 @@ following steps(root or sudo is needed):
       --help          Show this message and exit.
    ```
 
-7. test node delay
+7. 节点延迟测试
 
     ```bash
     Usage: v2sub ping [OPTIONS]
@@ -167,10 +166,9 @@ following steps(root or sudo is needed):
    
 ## TODO
 
-support more features.
+支持更多功能.
 
-## More
+## 其它
 
-This program can run on all Linux platforms in theory, but I only tested it on
-`Arch Linux`. If you have any problems with other linux distributions, issue or
-pull request is welcome.
+理论上这个程序可以运行在所有 linux 平台， 但是我只在`Arch Linux`上面做了测试。 如果你在
+其它 linux 发行版上面使用时遇到任何问题，欢迎提交 Issue 或者 PR 。
