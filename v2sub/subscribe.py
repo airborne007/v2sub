@@ -71,12 +71,12 @@ def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
         click.echo("Can't parse the url, please check your network or make"
                    " sure you entered the correct URL!")
         sys.exit(1)
-    server_links = base64.b64decode(resp.content).splitlines()
+    nodes = base64.b64decode(resp.content).splitlines()
     servers = []
-    for index, server_link in enumerate(server_links):
-        server_link = utils.byte2str(server_link).replace("vmess://", "")
-        server_node = json.loads(base64.b64decode(server_link))
-        servers.append(server_node)
+    for node in nodes:
+        node = utils.byte2str(node).replace("vmess://", "")
+        node = utils.byte2str(base64.b64decode(node))
+        servers.append(json.loads(node))
     all_servers = utils.read_as_json(SERVER_CONFIG)
     all_servers.update({name: servers})
     utils.write_to_json(all_servers, SERVER_CONFIG)
