@@ -13,7 +13,7 @@ def write_to_json(obj, filename):
         json.dump(obj, f, indent=2)
 
 
-def read_as_json(filename):
+def read_from_json(filename):
     try:
         with open(filename, 'r') as f:
             return json.load(f)
@@ -63,7 +63,7 @@ def _ping(ip, times=3, timeout=1, interval=0.2):
 
 def ping(name=subscribe.DEFAULT_SUBSCRIBE, index=None, all_servers=None):
     if all_servers is None:
-        all_servers = read_as_json(subscribe.SERVER_CONFIG)
+        all_servers = read_from_json(subscribe.SERVER_CONFIG)
     try:
         servers = all_servers[name]
     except KeyError:

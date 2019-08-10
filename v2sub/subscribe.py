@@ -24,21 +24,21 @@ def init():
 
 
 def add_subscribe(url, name=DEFAULT_SUBSCRIBE):
-    subscribe = utils.read_as_json(SUBSCRIBE_CONFIG)
+    subscribe = utils.read_from_json(SUBSCRIBE_CONFIG)
     subscribe.update({name: url})
     utils.write_to_json(subscribe, SUBSCRIBE_CONFIG)
     click.echo("Added subscribe: %s" % url)
 
 
 def list_subscribe():
-    subscribe = utils.read_as_json(SUBSCRIBE_CONFIG)
+    subscribe = utils.read_from_json(SUBSCRIBE_CONFIG)
     click.echo("Subscribes:")
     for name, url in subscribe.items():
         click.echo("%s: %s" % (name, url))
 
 
 def _remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
-    all_subscribes = utils.read_as_json(SUBSCRIBE_CONFIG)
+    all_subscribes = utils.read_from_json(SUBSCRIBE_CONFIG)
     if all_subs:
         all_subscribes = dict()
     else:
@@ -47,7 +47,7 @@ def _remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
 
 
 def _remove_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
-    all_servers = utils.read_as_json(SERVER_CONFIG)
+    all_servers = utils.read_from_json(SERVER_CONFIG)
     if all_subs:
         all_servers = dict()
     else:
@@ -77,7 +77,7 @@ def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
         node = utils.byte2str(node).replace("vmess://", "")
         node = utils.byte2str(base64.b64decode(node))
         servers.append(json.loads(node))
-    all_servers = utils.read_as_json(SERVER_CONFIG)
+    all_servers = utils.read_from_json(SERVER_CONFIG)
     all_servers.update({name: servers})
     utils.write_to_json(all_servers, SERVER_CONFIG)
 
@@ -88,7 +88,7 @@ def _update_all_subscribe(subscribes: dict):
 
 
 def update_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
-    all_subscribe = utils.read_as_json(SUBSCRIBE_CONFIG)
+    all_subscribe = utils.read_from_json(SUBSCRIBE_CONFIG)
     if all_subs:
         _update_all_subscribe(all_subscribe)
     else:
@@ -110,7 +110,7 @@ def _list_server(name, nodes):
 
 
 def list_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
-    all_servers = utils.read_as_json(SERVER_CONFIG)
+    all_servers = utils.read_from_json(SERVER_CONFIG)
     if not all_servers:
         click.echo("No servers found, please add and update subscribe first!")
         sys.exit(1)
@@ -122,7 +122,7 @@ def list_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
 
 
 def get_node(index, name=DEFAULT_SUBSCRIBE):
-    all_servers = utils.read_as_json(SERVER_CONFIG)
+    all_servers = utils.read_from_json(SERVER_CONFIG)
     try:
         servers = all_servers[name]
     except KeyError:
