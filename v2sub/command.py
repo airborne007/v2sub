@@ -4,6 +4,7 @@ import sys
 
 import click
 
+from v2sub import DEFAULT_SUBSCRIBE
 from v2sub import __version__
 from v2sub import config
 from v2sub import subscribe
@@ -27,7 +28,7 @@ def version():
 
 @cli.command()
 @click.argument("url")
-@click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
+@click.option("--name", default=DEFAULT_SUBSCRIBE,
               help="name of the subscribe, if not provided, a default name "
                    "will be given.")
 def add(url, name):
@@ -39,7 +40,7 @@ def add(url, name):
 
 
 @cli.command()
-@click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
+@click.option("--name", default=DEFAULT_SUBSCRIBE,
               help="name of subscribe will be removed, if not provided, "
                    "default subscribe will be removed.")
 @click.option("--all-subs", "--all", is_flag=True, default=False,
@@ -50,7 +51,7 @@ def remove(name, all_subs):
 
 
 @cli.command()
-@click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
+@click.option("--name", default=DEFAULT_SUBSCRIBE,
               help="the name of the subscribe you want to update, if not "
                    "provided, default subscribe will be updated.")
 @click.option("--all-subs", "--all", is_flag=True, default=False,
@@ -62,7 +63,7 @@ def update(name, all_subs):
 
 @cli.command(name="list")
 @click.option("--name",
-              default=subscribe.DEFAULT_SUBSCRIBE,
+              default=DEFAULT_SUBSCRIBE,
               help="the name of the subscribe you want list, if not provided, "
                    "default subscribe will be listed.")
 @click.option("--all-subs", "--all", is_flag=True, default=False,
@@ -73,7 +74,7 @@ def list_servers(name, all_subs):
 
 
 @cli.command()
-@click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
+@click.option("--name", default=DEFAULT_SUBSCRIBE,
               help="the name of the subscribe you want ping with. if not "
                    "provided, default subscribe will be pinged.")
 @click.option("--index", type=click.INT,
@@ -86,7 +87,7 @@ def ping(name, index):
 
 @cli.command()
 @click.argument("index", type=click.INT)
-@click.option("--name", default=subscribe.DEFAULT_SUBSCRIBE,
+@click.option("--name", default=DEFAULT_SUBSCRIBE,
               help="the name of the subscribe you want run with. if not "
                    "provided, the default subscribe will be run.")
 @click.option("--port", type=click.INT, default=1080,

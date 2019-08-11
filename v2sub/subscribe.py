@@ -6,12 +6,11 @@ import sys
 import click
 import requests
 
+from v2sub import BASE_PATH
+from v2sub import DEFAULT_SUBSCRIBE
+from v2sub import SERVER_CONFIG
+from v2sub import SUBSCRIBE_CONFIG
 from v2sub import utils
-
-BASE_PATH = os.path.join(os.path.expandvars("$HOME"), ".v2sub")
-SUBSCRIBE_CONFIG = os.path.join(BASE_PATH, 'subscribes.json')
-SERVER_CONFIG = os.path.join(BASE_PATH, 'servers.json')
-DEFAULT_SUBSCRIBE = "default"
 
 
 def init():
@@ -40,7 +39,7 @@ def list_subscribe():
 def _remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
     all_subscribes = utils.read_from_json(SUBSCRIBE_CONFIG)
     if all_subs:
-        all_subscribes = dict()
+        all_subscribes.clear()
     else:
         all_subscribes.pop(name, None)
     utils.write_to_json(all_subscribes, SUBSCRIBE_CONFIG)
@@ -49,7 +48,7 @@ def _remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
 def _remove_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
     all_servers = utils.read_from_json(SERVER_CONFIG)
     if all_subs:
-        all_servers = dict()
+        all_servers.clear()
     else:
         all_servers.pop(name, None)
     utils.write_to_json(all_servers, SERVER_CONFIG)
@@ -67,7 +66,7 @@ def remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
 def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
     try:
         resp = requests.get(url)
-    except requests.exceptions.ConnectionError as err:
+    except requests.exceptions.ConnectionError:
         click.echo("Can't parse the url, please check your network or make"
                    " sure you entered the correct URL!")
         sys.exit(1)

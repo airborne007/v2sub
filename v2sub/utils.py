@@ -5,7 +5,8 @@ from subprocess import call, Popen, PIPE
 
 import click
 
-from v2sub import subscribe
+from v2sub import DEFAULT_SUBSCRIBE
+from v2sub import SERVER_CONFIG
 
 
 def write_to_json(obj, filename):
@@ -35,35 +36,44 @@ def check_index(index: int):
 
 
 def echo_node(index, node, delay=None):
-    s = '[' + str(index) + ']' + node['ps']
+    s = '[%d]%s--' % (index, node['ps'])
     if delay:
-        s += "--timeout" if delay == -1 else "--%sms" % str(delay)
+        s += "timeout" if delay == -1 else "%.2fms" % delay
     else:
-        s += "--%s" % node['add']
+        s += "%s" % node['add']
     click.echo(s)
 
 
 def restart_server():
-    click.echo("restart v2ray service...")
-    call("systemctl restart v2ray.service", shell=True)
-    click.echo("Done...")
+    click.echo("Going to restart v2ray service...")
+    result = call("systemctl restart v2ray.service", shell=True)
+    if result == 0:
+        click.echo("Done...")
+    else:
+        click.echo("Error...")
 
 
 def _ping(ip, times=3, timeout=1, interval=0.2):
-    times, timeout, interval = str(times), str(timeout), str(interval)
-    cmd = ['ping', '-n', '-W', timeout, '-c', times, "-i", interval, ip]
+    cmd = [
+        'ping',
+        '-n',
+        '-W%d' % timeout,
+        '-c%d' % times,
+        "-i%f" % interval,
+        ip
+    ]
     proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
     output, _ = proc.communicate()
     reg = r'min/avg/max/mdev = ([0-9]+.[0-9]+)/([0-9]+.[0-9]+)'
     s = re.search(reg, str(output))
     if s:
-        return s.group(2)
+        return float(s.group(2))
     return -1
 
 
-def ping(name=subscribe.DEFAULT_SUBSCRIBE, index=None, all_servers=None):
+def ping(name=DEFAULT_SUBSCRIBE, index=None, all_servers=None):
     if all_servers is None:
-        all_servers = read_from_json(subscribe.SERVER_CONFIG)
+        all_servers = read_from_json(SERVER_CONFIG)
     try:
         servers = all_servers[name]
     except KeyError:
