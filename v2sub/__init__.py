@@ -1,6 +1,6 @@
 import os
 
-__version__ = '0.2'
+__version__ = '0.3'
 
 # define all global variables in here
 BASE_PATH = os.path.join(os.path.expandvars("$HOME"), ".v2sub")
