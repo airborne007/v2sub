@@ -14,11 +14,13 @@ Features:
 
 ## Installation
 
+The easiest way to get `v2sub` is to use `pip`:
+
 ```bash
 pip install v2sub
 ```
 
-or
+To install latest development version once:
 
 ```bash
 pip install git+https://github.com/airborne007/v2sub.git@master
@@ -29,7 +31,7 @@ pip install git+https://github.com/airborne007/v2sub.git@master
 **NOTE:** Before using, I will assume that you have installed v2ray and v2sub
 
 If you have only one subscribe source, usage is really simple. Just do as
-following steps(root or sudo is needed):
+following steps:
 
 1. add a subscribe source
 
@@ -43,12 +45,12 @@ following steps(root or sudo is needed):
     v2sub update
    ```
 
-3. run and enjoin it
+3. run and enjoin it(root or sudo is needed)
 
     ```bash
     v2sub run [index]
    ```
-   
+
    *All nodes will be list after update, the `index` is the order of node.*
 
 ## More Details
@@ -58,12 +60,12 @@ following steps(root or sudo is needed):
     ```bash
     # v2sub --help
     Usage: v2sub [OPTIONS] COMMAND [ARGS]...
-    
+
       A v2ray subscriber written by python3
-    
+
     Options:
       --help  Show this message and exit.
-    
+
     Commands:
       add      add a subscribe.
       list     list subscribe nodes.
@@ -79,11 +81,11 @@ following steps(root or sudo is needed):
     ```bash
     # v2sub add --help
     Usage: v2sub add [OPTIONS] URL
-    
+
       add a subscribe.
-    
+
       URL: url of the subscribe
-    
+
     Options:
       --name TEXT  name of the subscribe, if not provided, a default name will be
                    given.
@@ -95,9 +97,9 @@ following steps(root or sudo is needed):
     ```bash
     # v2sub update --help
     Usage: v2sub update [OPTIONS]
-    
+
       update subscribe nodes.
-    
+
     Options:
       --name TEXT        the name of the subscribe you want to update, if not
                          provided, default subscribe will be updated.
@@ -110,9 +112,9 @@ following steps(root or sudo is needed):
     ```bash
     # v2sub list --help
     Usage: v2sub list [OPTIONS]
-    
+
       list subscribe nodes.
-    
+
     Options:
       --name TEXT        the name of the subscribe you want list, if not provided,
                          default subscribe will be listed.
@@ -125,9 +127,9 @@ following steps(root or sudo is needed):
     ```bash
     # v2sub remove --help
     Usage: v2sub remove [OPTIONS]
-    
+
       remove subscribe and it\'s nodes.
-    
+
     Options:
       --name TEXT        name of subscribe will be removed, if not provided,
                          default subscribe will be removed.
@@ -140,11 +142,11 @@ following steps(root or sudo is needed):
     ```bash
     # v2sub run --help
     Usage: v2sub run [OPTIONS] INDEX
-    
+
       start v2ray with an specify node.
-    
+
       INDEX: the index node id list before.
-    
+
     Options:
       --name TEXT     the name of the subscribe you want run with. if not
                       provided, the default subscribe will be run.
@@ -156,7 +158,7 @@ following steps(root or sudo is needed):
 
     ```bash
     Usage: v2sub ping [OPTIONS]
-    
+
     Options:
       --name TEXT      the name of the subscribe you want ping with. if not
                        provided, default subscribe will be pinged.
@@ -164,7 +166,7 @@ following steps(root or sudo is needed):
                        provided, will test all node delay.
       --help           Show this message and exit.
     ```
-   
+
 ## TODO
 
 support more features.

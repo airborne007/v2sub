@@ -14,11 +14,13 @@
 
 ## 安装
 
+最简单的安装`v2sub`的方法是使用`pip`：
+
 ```bash
 pip install v2sub
 ```
 
-或者
+你也可以安装最新的开发版：
 
 ```bash
 pip install git+https://github.com/airborne007/v2sub.git@master
@@ -28,7 +30,7 @@ pip install git+https://github.com/airborne007/v2sub.git@master
 
 **注意：** 使用之前，我假定你系统上已经安装好了`v2ray`和`v2sub`
 
-如果你只有一个订阅源，那么使用就非常简单了。按照以下步骤操作（需要root或者sudo）：
+如果你只有一个订阅源，那么使用就非常简单了。按照以下步骤操作：
 
 1. 添加一个订阅源
 
@@ -42,12 +44,12 @@ pip install git+https://github.com/airborne007/v2sub.git@master
     v2sub update
    ```
 
-3. 运行
+3. 运行（需要root或者sudo）
 
     ```bash
     v2sub run [index]
    ```
-   
+
    *更新订阅后会列出所有节点，`index`就是节点序号*
 
 ## 更详细说明
@@ -57,12 +59,12 @@ pip install git+https://github.com/airborne007/v2sub.git@master
     ```bash
     # v2sub --help
     Usage: v2sub [OPTIONS] COMMAND [ARGS]...
-    
+
       A v2ray subscriber written by python3
-    
+
     Options:
       --help  Show this message and exit.
-    
+
     Commands:
       add      add a subscribe.
       list     list subscribe nodes.
@@ -78,11 +80,11 @@ pip install git+https://github.com/airborne007/v2sub.git@master
     ```bash
     # v2sub add --help
     Usage: v2sub add [OPTIONS] URL
-    
+
       add a subscribe.
-    
+
       URL: url of the subscribe
-    
+
     Options:
       --name TEXT  name of the subscribe, if not provided, a default name will be
                    given.
@@ -94,9 +96,9 @@ pip install git+https://github.com/airborne007/v2sub.git@master
     ```bash
     # v2sub update --help
     Usage: v2sub update [OPTIONS]
-    
+
       update subscribe nodes.
-    
+
     Options:
       --name TEXT        the name of the subscribe you want to update, if not
                          provided, default subscribe will be updated.
@@ -109,9 +111,9 @@ pip install git+https://github.com/airborne007/v2sub.git@master
     ```bash
     # v2sub list --help
     Usage: v2sub list [OPTIONS]
-    
+
       list subscribe nodes.
-    
+
     Options:
       --name TEXT        the name of the subscribe you want list, if not provided,
                          default subscribe will be listed.
@@ -124,9 +126,9 @@ pip install git+https://github.com/airborne007/v2sub.git@master
     ```bash
     # v2sub remove --help
     Usage: v2sub remove [OPTIONS]
-    
+
       remove subscribe and it\'s nodes.
-    
+
     Options:
       --name TEXT        name of subscribe will be removed, if not provided,
                          default subscribe will be removed.
@@ -139,11 +141,11 @@ pip install git+https://github.com/airborne007/v2sub.git@master
     ```bash
     # v2sub run --help
     Usage: v2sub run [OPTIONS] INDEX
-    
+
       start v2ray with an specify node.
-    
+
       INDEX: the index node id list before.
-    
+
     Options:
       --name TEXT     the name of the subscribe you want run with. if not
                       provided, the default subscribe will be run.
@@ -155,7 +157,7 @@ pip install git+https://github.com/airborne007/v2sub.git@master
 
     ```bash
     Usage: v2sub ping [OPTIONS]
-    
+
     Options:
       --name TEXT      the name of the subscribe you want ping with. if not
                        provided, default subscribe will be pinged.
@@ -163,7 +165,7 @@ pip install git+https://github.com/airborne007/v2sub.git@master
                        provided, will test all node delay.
       --help           Show this message and exit.
     ```
-   
+
 ## TODO
 
 支持更多功能.

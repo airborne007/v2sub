@@ -14,9 +14,6 @@ from v2sub import utils
 @click.group()
 def cli():
     """A v2ray subscriber written by python3"""
-    if os.getuid() != 0:
-        click.echo("Please run as root.")
-        sys.exit(1)
     subscribe.init()
 
 
@@ -97,6 +94,9 @@ def run(index, name, port):
 
     INDEX: the index node id list before.
     """
+    if os.getuid() != 0:
+        click.echo("Please run as root.")
+        sys.exit(1)
     node = subscribe.get_node(index, name)
     config.update_config(node, port)
     utils.restart_server()
