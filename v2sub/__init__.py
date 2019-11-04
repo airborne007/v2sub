@@ -1,6 +1,6 @@
 import os
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 # define all global variables in here
 user = os.getenv("SUDO_USER") or os.getenv("USER")
