@@ -2,9 +2,10 @@ import base64
 import json
 import os
 import sys
+from urllib.request import urlopen, Request
+from urllib.error import URLError
 
 import click
-import requests
 
 from v2sub import BASE_PATH
 from v2sub import DEFAULT_SUBSCRIBE
@@ -65,12 +66,13 @@ def remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
 
 def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
     try:
-        resp = requests.get(url)
-    except requests.exceptions.ConnectionError:
+        req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        resp = urlopen(req)
+    except URLError:
         click.echo("Can't parse the url, please check your network or make"
                    " sure you entered the correct URL!")
         sys.exit(1)
-    nodes = base64.b64decode(resp.content).splitlines()
+    nodes = base64.b64decode(resp.read()).splitlines()
     servers = []
     for node in nodes:
         node = utils.byte2str(node).replace("vmess://", "")

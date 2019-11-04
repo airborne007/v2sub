@@ -15,10 +15,7 @@ setuptools.setup(
     url="https://github.com/airborne007/v2sub",
     packages=setuptools.find_packages(),
     keywords=["v2ray", "subscriber", "linux"],
-    install_requires=[
-        "requests",
-        "click>=7.0",
-    ],
+    install_requires=["click>=7.0"],
     python_requires='>=3',
     license="MIT",
     project_urls={
