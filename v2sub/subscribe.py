@@ -63,6 +63,11 @@ def remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
     else:
         click.echo("Removed subscribe: %s" % name)
 
+def fix_base64(data):
+    missing_padding = len(data) % 4
+    if missing_padding != 0:
+        data += b'='* (4 - missing_padding)
+    return data
 
 def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
     try:
@@ -72,7 +77,7 @@ def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
         click.echo("Can't parse the url, please check your network or make"
                    " sure you entered the correct URL!")
         sys.exit(1)
-    nodes = base64.b64decode(resp.read()).splitlines()
+    nodes = base64.b64decode(fix_base64(resp.read())).splitlines()
     servers = []
     for node in nodes:
         node = utils.byte2str(node).replace("vmess://", "")
