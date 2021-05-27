@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-import os
-import sys
-
+from . import systemd
 import click
 
 from v2sub import DEFAULT_SUBSCRIBE
@@ -9,11 +7,12 @@ from v2sub import __version__
 from v2sub import config
 from v2sub import subscribe
 from v2sub import utils
+from simple_term_menu import TerminalMenu
 
 
 @click.group()
 def cli():
-    """A v2ray subscriber written by python3"""
+    """A v2ray subscriber written in python3"""
     subscribe.init()
 
 
@@ -83,24 +82,38 @@ def ping(name, index):
 
 
 @cli.command()
-@click.argument("index", type=click.INT)
 @click.option("--name", default=DEFAULT_SUBSCRIBE,
               help="the name of the subscribe you want run with. if not "
                    "provided, the default subscribe will be run.")
 @click.option("--port", type=click.INT, default=1080,
               help="the local port v2ray client listen on, default is 1080")
-def run(index, name, port):
-    """start v2ray with an specify node.
+def run(name, port):
+    """systemd.start v2ray with an specify node.
 
     INDEX: the index node id list before.
     """
-    if os.getuid() != 0:
-        click.echo("Please run as root.")
-        sys.exit(1)
+    servers = subscribe.get_servers(name)
+    menu = TerminalMenu(servers, title=name)
+    index = menu.show()
     node = subscribe.get_node(index, name)
-    config.update_config(node, port)
-    utils.restart_server()
+    existing_unit = utils.read_from_json(systemd.SYSTEMD_UNIT).get("unit", "")
+    existing_config = utils.read_from_json(config.V2RAY_CONFIG_FILE)
+    if existing_config != node:
+        systemd.stop(existing_unit)
+        config.update_config(node, port)
+    if not systemd.is_active(existing_unit):
+        unit = systemd.start(["v2ray", "-config", config.V2RAY_CONFIG_FILE])
+        utils.write_to_json(unit, systemd.SYSTEMD_UNIT)
 
+
+@cli.command()
+def stop():
+    """stop currently running v2ray
+    """
+    unit = utils.read_from_json(systemd.SYSTEMD_UNIT).get("unit", "")
+    if systemd.is_active(unit):
+        systemd.stop(unit)
+    click.echo("Stopped")
 
 if __name__ == '__main__':
     cli()

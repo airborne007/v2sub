@@ -1,7 +1,7 @@
 import json
 import re
 import sys
-from subprocess import call, Popen, PIPE
+from subprocess import Popen, PIPE
 
 import click
 
@@ -44,14 +44,6 @@ def echo_node(index, node, delay=None):
     click.echo(s)
 
 
-def restart_server():
-    click.echo("Going to restart v2ray service...")
-    result = call("systemctl restart v2ray.service", shell=True)
-    if result == 0:
-        click.echo("Done...")
-    else:
-        click.echo("Error...")
-
 
 def _ping(ip, times=3, timeout=1, interval=0.2):
     cmd = [
@@ -80,15 +72,11 @@ def ping(name=DEFAULT_SUBSCRIBE, index=None, all_servers=None):
         click.echo("Unknown subscribe: %s, please check it." % name)
         sys.exit(1)
     if index is not None:
-        try:
-            check_index(index)
-            node = servers[index - 1]
-        except IndexError:
-            click.echo("Invalid index: %s, please check it." % index)
-            sys.exit(1)
+        node = servers[index]
         delay = _ping(node['add'])
         echo_node(index, node, delay=delay)
     else:
         for index, node in enumerate(servers, start=1):
             delay = _ping(node['add'])
             echo_node(index, node, delay=delay)
+
