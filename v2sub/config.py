@@ -1,6 +1,6 @@
 from v2sub import utils
 
-V2RAY_CONFIG_FILE = "/etc/v2ray/config.json"
+V2RAY_CONFIG_FILE = "/tmp/config.json"
 
 
 def _get_config(addr: str, port: int, id_: str, client_port=1080) -> dict:

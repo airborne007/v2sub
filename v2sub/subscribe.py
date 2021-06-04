@@ -4,6 +4,7 @@ import os
 import sys
 from urllib.request import urlopen, Request
 from urllib.error import URLError
+from v2sub.systemd import SYSTEMD_UNIT
 
 import click
 
@@ -21,6 +22,8 @@ def init():
         os.mknod(SUBSCRIBE_CONFIG)
     if not os.path.exists(SERVER_CONFIG):
         os.mknod(SERVER_CONFIG)
+    if not os.path.exists(SYSTEMD_UNIT):
+        os.mknod(SYSTEMD_UNIT)
 
 
 def add_subscribe(url, name=DEFAULT_SUBSCRIBE):
@@ -134,12 +137,18 @@ def get_node(index, name=DEFAULT_SUBSCRIBE):
     except KeyError:
         click.echo("No subscribe named %s found!" % name)
         sys.exit(1)
-    try:
-        utils.check_index(index)
-        node = servers[index - 1]
-        click.echo("switch to node:")
-        utils.ping(name=name, index=index, all_servers=all_servers)
-    except IndexError:
-        click.echo("Invalid index: %s, please check it." % index)
-        sys.exit(1)
+    node = servers[index]
+    click.echo("switch to node:")
+    utils.ping(name=name, index=index, all_servers=all_servers)
     return node
+
+
+def get_servers(name=DEFAULT_SUBSCRIBE, all_subs=False):
+    all_servers = utils.read_from_json(SERVER_CONFIG)
+    if not all_servers:
+        click.echo("No servers found, please add and update subscribe first!")
+        sys.exit(1)
+    if all_subs:
+        return [node["ps"] for node in [sub for sub in all_servers]]
+    else:
+        return [node["ps"] for node in all_servers[name]]
