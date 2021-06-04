@@ -83,6 +83,9 @@ def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
     nodes = base64.b64decode(padding_base64(resp.read())).splitlines()
     servers = []
     for node in nodes:
+        # Ignore non-vemss node
+        if b"vmess://" not in node:
+            continue
         node = utils.byte2str(node).replace("vmess://", "")
         node = utils.byte2str(base64.b64decode(node))
         servers.append(json.loads(node))

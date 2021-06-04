@@ -13,6 +13,7 @@ SYSTEMD_RUN_CMD = [
             "Restart=on-failure",
         ]
 
+
 def start(cmd: Iterable) -> dict:
         SYSTEMD_RUN_CMD.extend(cmd)
 
@@ -23,6 +24,7 @@ def start(cmd: Iterable) -> dict:
         )
 
         return {"unit": proc.stderr.decode().split(":")[1].strip()}
+
 
 def is_active(unit: str) -> bool:
     try:
@@ -37,6 +39,7 @@ def is_active(unit: str) -> bool:
         if "active" in proc.stdout.decode():
             return True
     return False
+
 
 def stop(unit: str) -> None:
     run(

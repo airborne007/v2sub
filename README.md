@@ -1,6 +1,6 @@
 # v2sub
 
-A v2ray subscriber written by python3
+A v2ray subscriber written in python3
 
 * [中文版本](./README_CN.md)
 
@@ -61,7 +61,7 @@ following steps:
     # v2sub --help
     Usage: v2sub [OPTIONS] COMMAND [ARGS]...
 
-      A v2ray subscriber written by python3
+      A v2ray subscriber written in python3
 
     Options:
       --help  Show this message and exit.
@@ -141,11 +141,9 @@ following steps:
 
     ```bash
     # v2sub run --help
-    Usage: v2sub run [OPTIONS] INDEX
+    Usage: v2sub run [OPTIONS]
 
-      start v2ray with an specify node.
-
-      INDEX: the index node id list before.
+      start v2ray with a selected node.
 
     Options:
       --name TEXT     the name of the subscribe you want run with. if not

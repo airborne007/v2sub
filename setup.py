@@ -9,13 +9,16 @@ setuptools.setup(
     version=__version__,
     author="airborne007",
     author_email="huangtao0202@gmail.com",
-    description="A v2ray subscriber written by python3",
+    description="A v2ray subscriber written in python3",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/airborne007/v2sub",
     packages=setuptools.find_packages(),
     keywords=["v2ray", "subscriber", "linux"],
-    install_requires=["click>=7.0"],
+    install_requires=[
+        "click>=7.0",
+        "simple-term-menu>=1.2.1"
+    ],
     python_requires='>=3',
     license="MIT",
     project_urls={

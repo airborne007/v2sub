@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-from . import systemd
 import click
+from simple_term_menu import TerminalMenu
 
 from v2sub import DEFAULT_SUBSCRIBE
 from v2sub import __version__
 from v2sub import config
 from v2sub import subscribe
+from v2sub.systemd import *
 from v2sub import utils
-from simple_term_menu import TerminalMenu
 
 
 @click.group()
@@ -88,9 +88,7 @@ def ping(name, index):
 @click.option("--port", type=click.INT, default=1080,
               help="the local port v2ray client listen on, default is 1080")
 def run(name, port):
-    """systemd.start v2ray with an specify node.
-
-    INDEX: the index node id list before.
+    """start v2ray with a selected node.
     """
     servers = subscribe.get_servers(name)
     menu = TerminalMenu(servers, title=name)
@@ -108,7 +106,7 @@ def run(name, port):
 
 @cli.command()
 def stop():
-    """stop currently running v2ray
+    """stop v2ray
     """
     unit = utils.read_from_json(systemd.SYSTEMD_UNIT).get("unit", "")
     if systemd.is_active(unit):
