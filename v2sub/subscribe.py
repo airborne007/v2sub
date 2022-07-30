@@ -66,11 +66,13 @@ def remove_subscribe(name=DEFAULT_SUBSCRIBE, all_subs=False):
     else:
         click.echo("Removed subscribe: %s" % name)
 
+
 def padding_base64(data):
     missing_padding = len(data) % 4
     if missing_padding != 0:
-        data += b'='* (4 - missing_padding)
+        data += b'=' * (4 - missing_padding)
     return data
+
 
 def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
     try:
@@ -87,7 +89,8 @@ def parser_subscribe(url, name=DEFAULT_SUBSCRIBE):
         if b"vmess://" not in node:
             continue
         node = utils.byte2str(node).replace("vmess://", "")
-        node = utils.byte2str(base64.b64decode(node))
+        node = utils.str2byte(node)
+        node = utils.byte2str(base64.b64decode(padding_base64(node)))
         servers.append(json.loads(node))
     all_servers = utils.read_from_json(SERVER_CONFIG)
     all_servers.update({name: servers})

@@ -44,7 +44,6 @@ def echo_node(index, node, delay=None):
     click.echo(s)
 
 
-
 def _ping(ip, times=3, timeout=1, interval=0.2):
     cmd = [
         'ping',
@@ -79,4 +78,3 @@ def ping(name=DEFAULT_SUBSCRIBE, index=None, all_servers=None):
         for index, node in enumerate(servers, start=1):
             delay = _ping(node['add'])
             echo_node(index, node, delay=delay)
-

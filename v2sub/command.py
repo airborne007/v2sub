@@ -113,5 +113,6 @@ def stop():
         systemd.stop(unit)
     click.echo("Stopped")
 
+
 if __name__ == '__main__':
     cli()
