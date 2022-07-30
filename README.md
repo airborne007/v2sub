@@ -48,10 +48,10 @@ following steps:
 3. run and enjoin it(root or sudo is needed)
 
     ```bash
-    v2sub run [index]
+    v2sub run
    ```
 
-   *All nodes will be list after update, the `index` is the order of node.*
+   *All nodes will be list after update, you should choose one node to run.*
 
 ## More Details
 
@@ -172,5 +172,5 @@ support more features.
 ## More
 
 This program can run on all Linux platforms in theory, but I only tested it on
-`Arch Linux`. If you have any problems with other linux distributions, issue or
+`Arch Linux` and `Ubuntu 20.04`. If you have any problems with other linux distributions, issue or
 pull request is welcome.
