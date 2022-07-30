@@ -1,6 +1,6 @@
 import os
 
-__version__ = '1.2'
+__version__ = '1.3'
 
 # define all global variables in here
 user = os.getenv("USER")
