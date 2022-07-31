@@ -6,7 +6,7 @@ from v2sub import DEFAULT_SUBSCRIBE
 from v2sub import __version__
 from v2sub import config
 from v2sub import subscribe
-from v2sub.systemd import *
+from v2sub import systemd
 from v2sub import utils
 
 

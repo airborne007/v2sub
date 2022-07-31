@@ -6,24 +6,24 @@ import os
 
 SYSTEMD_UNIT = os.path.join(BASE_PATH, 'unit.json')
 SYSTEMD_RUN_CMD = [
-            "systemd-run",
-            "--user",
-            "--collect",
-            "-p",
-            "Restart=on-failure",
-        ]
+    "systemd-run",
+    "--user",
+    "--collect",
+    "-p",
+    "Restart=on-failure",
+]
 
 
 def start(cmd: Iterable) -> dict:
-        SYSTEMD_RUN_CMD.extend(cmd)
+    SYSTEMD_RUN_CMD.extend(cmd)
 
-        proc = run(
-            SYSTEMD_RUN_CMD,
-            check=True,
-            capture_output=True,
-        )
+    proc = run(
+        SYSTEMD_RUN_CMD,
+        check=True,
+        capture_output=True,
+    )
 
-        return {"unit": proc.stderr.decode().split(":")[1].strip()}
+    return {"unit": proc.stderr.decode().split(":")[1].strip()}
 
 
 def is_active(unit: str) -> bool:
