@@ -11,7 +11,7 @@ from v2sub import SERVER_CONFIG
 
 def write_to_json(obj, filename):
     with open(filename, 'w') as f:
-        json.dump(obj, f, indent=2)
+        json.dump(obj, f, indent=2, ensure_ascii=False)
 
 
 def read_from_json(filename):
